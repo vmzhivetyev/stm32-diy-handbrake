@@ -1,20 +1,20 @@
 #include <Arduino.h>
+#include <USBComposite.h>
 
-int8_t led = 0;
+USBHID HID;
+HIDJoystick Joystick(HID);
+
+#define POTENTIOMETER_PIN A0
 
 void setup() {
-  // Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
+
+  HID.begin(HID_JOYSTICK);
+  while (!USBComposite);
 }
 
 void loop() {
-  // if(Serial.available()) {
-  //   char c = Serial.read();
-  //   Serial.print("hello ");
-  //   Serial.print(c);
-  //   Serial.println();
-  // }
-  led = ~ led & 1;
-  digitalWrite(LED_BUILTIN, led);
-  delay(100);
+  delay(10);
+  Joystick.X(millis() % 1024);
 }
