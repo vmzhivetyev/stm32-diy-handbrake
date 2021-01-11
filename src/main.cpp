@@ -4,7 +4,7 @@
 USBHID HID;
 HIDJoystick Joystick(HID);
 
-#define POTENTIOMETER_PIN A0
+#define POTENTIOMETER_PIN PA0
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -12,9 +12,12 @@ void setup() {
 
   HID.begin(HID_JOYSTICK);
   while (!USBComposite);
+
+  pinMode(POTENTIOMETER_PIN, INPUT_ANALOG);
 }
 
 void loop() {
+  uint16 val = analogRead(POTENTIOMETER_PIN); // 0–4095
   delay(10);
-  Joystick.X(millis() % 1024);
+  Joystick.X(val);
 }
