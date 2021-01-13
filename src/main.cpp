@@ -17,7 +17,6 @@ void setup() {
 }
 
 void loop() {
-  uint16 val = analogRead(POTENTIOMETER_PIN); // 0–4095
-  delay(10);
-  Joystick.X(val);
+  float val = analogRead(POTENTIOMETER_PIN) / 4 / 0.7f; // 0–4095
+  Joystick.X((uint16)val);
 }
