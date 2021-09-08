@@ -77,12 +77,16 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("one reading:\t");
-  Serial.print(scale.get_units(), 1);
-  Serial.print("\t| average:\t");
-  Serial.println(scale.get_units(10), 1);
+  float force = scale.get_units();
+  float val = force / 600 * 4096; // 0–4095
+  Serial.print("raw: ");
+  Serial.println(force);
+  Serial.print("mapped: ");
+  Serial.println(val);
+  Serial.print("uint: ");
+  Serial.println((uint16)val);
 
   // scale.power_down();			        // put the ADC in sleep mode
-  delay(10);
+  delay(100);
   // scale.power_up();
 }
