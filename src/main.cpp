@@ -46,6 +46,6 @@ void setup()
 
 void loop() {
   float force = scale.get_units();
-  float val = force / 600 * 4096; // 0–4095
+  float val = force / 1300 * 4096; // 0–4095
   Joystick.X((uint16)val);
 }
