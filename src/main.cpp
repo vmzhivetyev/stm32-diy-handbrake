@@ -40,12 +40,20 @@ void setup()
   // default "128" (Channel A) is used here.
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
 
-  scale.set_scale(2280.f);
+  scale.set_scale(200.f);
   scale.tare();
 }
 
-void loop() {
+static inline float mapf(float value, float fromStart, float fromEnd,
+                         float toStart, float toEnd)
+{
+  return (value - fromStart) * (toEnd - toStart) / (fromEnd - fromStart) +
+         toStart;
+}
+
+void loop()
+{
   float force = scale.get_units();
-  float val = force / 1300 * 4096; // 0–4095
+  float val = mapf(force, 0, 15000, 0, 1024); // 0–4095
   Joystick.X((uint16)val);
 }
